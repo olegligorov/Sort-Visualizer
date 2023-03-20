@@ -1,9 +1,11 @@
 import React from "react";
 import './SortingVisualizer.css'
-import {getMergeSortAnimations} from '../SortingAlgorithms/SortingAlgorithms';
+import { getMergeSortAnimations } from '../SortingAlgorithms/MergeSort';
+import { getBubbleSortAnimations } from "../SortingAlgorithms/BubbleSort";
 
 const ANIMATION_TIME_MS = 1;
-const NUMBER_OF_BARS = 250;
+// const NUMBER_OF_BARS = (window.screen.width - 200) / 4;
+const NUMBER_OF_BARS = 6;
 const PRIMARY_COLOR = 'turquoise';
 const SECONDARY_COLOR = 'red';
 
@@ -32,8 +34,9 @@ export default class SortingVisualizer extends React.Component {
 
   mergeSort() {
     const animations = getMergeSortAnimations(this.state.array);
+    const arrayBars = document.getElementsByClassName('array-bar');
     for (let i = 0; i < animations.length; ++i) {
-      const arrayBars = document.getElementsByClassName('array-bar');
+      // const arrayBars = document.getElementsByClassName('array-bar');
       // the animation array is consisted of triplets: [i, j], [i, j], [i, newHeight], 
       // i and j are indicies of the elements to be swapped(colored), newHeight is the new height for the ith element
       // every element with such index that index % 3 === 2 is a height swap array
@@ -46,8 +49,8 @@ export default class SortingVisualizer extends React.Component {
         const color = i % 3 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
         // color the bars
         setTimeout(() => {
-          barOneStyle.backgroundColor = color; 
-          barTwoStyle.backgroundColor = color; 
+          barOneStyle.backgroundColor = color;
+          barTwoStyle.backgroundColor = color;
         }, i * ANIMATION_TIME_MS);
       } else {
         setTimeout(() => {
@@ -59,15 +62,52 @@ export default class SortingVisualizer extends React.Component {
     }
   }
 
+  bubbleSort() {
+    const animations = getBubbleSortAnimations(this.state.array);
+    const arrayBars = document.getElementsByClassName('array-bar');
+    for (let i = 0; i < animations.length; ++i) {
+      // const arrayBars = document.getElementsByClassName('array-bar');
+      const current = animations[i];
+
+      if (current.length === 3) {
+        const [action, barOneIdx, barTwoIdx] = current;
+        const color = action === 'check' ? 'green' : action === 'checkdone' ? 'turquoise' : 'red';
+        let barOneStyle = arrayBars[barOneIdx].style;
+        let barTwoStyle = arrayBars[barTwoIdx].style;
+        setTimeout(() => {
+          barOneStyle.backgroundColor = color;
+          barTwoStyle.backgroundColor = color;
+        }, i * ANIMATION_TIME_MS);
+        if (color === 'red') {
+          setTimeout(() => {
+            let temp = barOneStyle.height;
+            barOneStyle.height = barTwoStyle.height;
+            barTwoStyle.height = temp;
+          }, i * ANIMATION_TIME_MS);
+        }
+      } else {
+        setTimeout(() => {
+          const color = 'purple';
+          const barOneIdx = current[1];
+          let barOneStyle = arrayBars[barOneIdx].style;
+          barOneStyle.backgroundColor = color;
+        }, i * ANIMATION_TIME_MS);
+      }
+    }
+    // return the color
+    setTimeout(() => {
+      for (let arrayBar of arrayBars) {
+        arrayBar.style.backgroundColor = PRIMARY_COLOR;
+      }
+    }, 2000);
+
+  }
+
   quickSort() {
 
   }
 
   heapSort() {
-
-  }
-
-  bubbleSort() {
 
   }
 
