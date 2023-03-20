@@ -1,0 +1,33 @@
+.sorting-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.array-container {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    transform: rotateX(180deg);
+}
+
+.array-bar {
+    width: 2px;
+    background-color: turquoise;
+    display: inline-block;
+    margin: 0 1px; 
+}
+
+.sorting-header {
+    padding: 1rem;
+    /* background-color: yellow; */
+}
+
+.sorting-header-buttons button {
+    margin: 0 0.5rem;
+    padding: 0.5rem;
+    border-radius: 10px;
+    border: 0;
+    cursor: pointer;
+}
