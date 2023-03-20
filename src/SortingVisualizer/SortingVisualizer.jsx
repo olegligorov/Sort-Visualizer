@@ -4,8 +4,8 @@ import { getMergeSortAnimations } from '../SortingAlgorithms/MergeSort';
 import { getBubbleSortAnimations } from "../SortingAlgorithms/BubbleSort";
 
 const ANIMATION_TIME_MS = 1;
-// const NUMBER_OF_BARS = (window.screen.width - 200) / 4;
-const NUMBER_OF_BARS = 6;
+let NUMBER_OF_BARS = (window.screen.width - 200) / 4;
+// const NUMBER_OF_BARS = 6;
 const PRIMARY_COLOR = 'turquoise';
 const SECONDARY_COLOR = 'red';
 
@@ -23,6 +23,7 @@ export default class SortingVisualizer extends React.Component {
   }
 
   resetArray() {
+    NUMBER_OF_BARS = (window.screen.width - 200) / 4;
     const array = []
     for (let i = 0; i < NUMBER_OF_BARS; ++i) {
       array.push(randomIntegerFromInterval(5, 800));
